@@ -38,6 +38,7 @@
                     <li><a href="{{ url('/home') }}">Dashboard</a></li>
                     @role('admin')
                     <li><a href="{{ route('admin.authors.index') }}">Penulis</a></li>
+                    <li><a href="{{ route('admin.books.index') }}">Buku</a></li>
                     @endrole
                 </ul>
 
