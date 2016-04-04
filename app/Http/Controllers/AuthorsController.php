@@ -36,7 +36,7 @@ class AuthorsController extends Controller
      */
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
     /**
@@ -47,7 +47,9 @@ class AuthorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, ['name' => 'required|unique:authors']);
+        $author = Author::create($request->only('name'));
+        return redirect()->route('admin.authors.index');
     }
 
     /**
