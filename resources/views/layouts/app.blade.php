@@ -36,7 +36,9 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Dashboard</a></li>
+                    @role('admin')
                     <li><a href="{{ route('admin.authors.index') }}">Penulis</a></li>
+                    @endrole
                 </ul>
 
                 <!-- Right Side Of Navbar -->
