@@ -63,6 +63,7 @@
         </div>
     </nav>
 
+    @include('layouts._flash')
     @yield('content')
 
     <script src="{{ asset('js/jquery-2.2.2.min.js') }}"></script>
