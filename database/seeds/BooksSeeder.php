@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Author;
+use App\Book;
+use App\User;
 
 class BooksSeeder extends Seeder
 {
@@ -25,10 +28,5 @@ class BooksSeeder extends Seeder
             'amount'=>4, 'author_id'=>$author3->id]);
         $book4 = Book::create(['title'=>'Cinta & Seks Rumah Tangga Muslim', 
             'amount'=>3, 'author_id'=>$author3->id]);
-
-        // Sample peminjaman buku
-        $member = User::where('email', 'member@gmail.com')->first();
-        $member->books()->save($book1, ['is_returned' => 0]);
-        $member->books()->save($book2, ['is_returned' => 0]);
     }
 }
