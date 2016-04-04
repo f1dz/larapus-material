@@ -29,12 +29,12 @@ class Author extends Model
                     $html .= "<li>$book->title</li>";
                 }
                 $html .= '</ul>';
-                
+
                 Session::flash("flash_notification", [
-                    "level"=>"danger", 
+                    "level"=>"danger",
                     "message"=>$html
                 ]);
-               
+
                 return false;
             }
         });

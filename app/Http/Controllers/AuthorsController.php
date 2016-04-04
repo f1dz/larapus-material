@@ -24,9 +24,10 @@ class AuthorsController extends Controller
             return Datatables::of($authors)
                 ->addColumn('action', function($author){
                     return view('datatable._action', [
-                        'model'    => $author,
-                        'form_url' => route('admin.authors.destroy', $author->id),
-                        'edit_url' => route('admin.authors.edit', $author->id),
+                        'model'           => $author,
+                        'form_url'        => route('admin.authors.destroy', $author->id),
+                        'edit_url'        => route('admin.authors.edit', $author->id),
+                        'confirm_message' => 'Yakin mau menghapus ' . $author->name . '?'
                     ]);
                 })->make(true);
         }
