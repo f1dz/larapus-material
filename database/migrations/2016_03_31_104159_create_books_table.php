@@ -17,6 +17,7 @@ class CreateBooksTable extends Migration
             $table->string('title');
             $table->integer('author_id')->unsigned();
             $table->integer('amount')->unsigned();
+            $table->string('cover');
             $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('authors')
