@@ -9,6 +9,8 @@ use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use App\Book;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 
 class BooksController extends Controller
 {
@@ -57,7 +59,7 @@ class BooksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBookRequest $request)
     {
         $this->validate($request, [
             'title'     => 'required|unique:books,title',
@@ -127,13 +129,6 @@ class BooksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'title'     => 'required|unique:books,title,' . $id,
-            'author_id' => 'required|exists:authors,id',
-            'amount'    => 'required|numeric',
-            'cover'     => 'image|max:2048'
-        ]);
-
         $book = Book::find($id);
         $book->update($request->all());
 
