@@ -24,7 +24,7 @@ class GuestController extends Controller
             return Datatables::of($books)
                 ->addColumn('action', function($book){
                     if (Entrust::hasRole('admin')) return '';
-                    return '<a class="btn btn-xs btn-primary" href="#">Pinjam</a>';
+                    return '<a class="btn btn-xs btn-primary" href="'.route('books.borrow', $book->id).'">Pinjam</a>';
                 })->make(true);
         }
 

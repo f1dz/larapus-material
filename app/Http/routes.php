@@ -27,6 +27,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', 'GuestController@index');
     Route::auth();
     Route::get('/home', 'HomeController@index');
+    Route::get('books/{book}/borrow', [
+        'middleware'=>['auth', 'role:member'],
+        'as'=>'books.borrow',
+        'uses'=>'BooksController@borrow']);
 
     Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'role:admin']], function () {
         Route::resource('authors', 'AuthorsController');
