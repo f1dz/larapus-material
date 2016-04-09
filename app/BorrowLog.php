@@ -9,6 +9,15 @@ class BorrowLog extends Model
     protected $fillable = ['book_id', 'user_id', 'is_returned'];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_returned' => 'boolean',
+    ];
+
+    /**
      * Relasi Many-to-One dengan Book
      * @return Book
      */
