@@ -31,6 +31,10 @@ Route::group(['middleware' => 'web'], function () {
         'middleware'=>['auth', 'role:member'],
         'as'=>'books.borrow',
         'uses'=>'BooksController@borrow']);
+    Route::put('books/{book}/return', [
+        'middleware'=>['auth', 'role:member'],
+        'as'=>'books.return',
+        'uses'=>'BooksController@returnBack']);
 
     Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'role:admin']], function () {
         Route::resource('authors', 'AuthorsController');
