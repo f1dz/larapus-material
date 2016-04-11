@@ -10,7 +10,8 @@
         "laravelcollective/html": "~5.2",
         "zizaco/entrust": "~1.7",
         "yajra/laravel-datatables-oracle": "~6.0",
-        "anhskohbo/no-captcha": "~2.0"
+        "anhskohbo/no-captcha": "~2.0",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
