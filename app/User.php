@@ -22,6 +22,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+	'is_verified' => 'boolean',
+    ];
+
+    /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
