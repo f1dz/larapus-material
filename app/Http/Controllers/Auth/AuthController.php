@@ -39,6 +39,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
+	$this->middleware('user-should-verified');
     }
 
     /**
@@ -73,5 +74,9 @@ class AuthController extends Controller
         $memberRole = Role::where('name', 'member')->first();
         $user->attachRole($memberRole);
         return $user;
+    }
+
+    public function verify(Request $request, $token)
+    {
     }
 }
