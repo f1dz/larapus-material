@@ -7,6 +7,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 use App\Book;
 use App\BorrowLog;
 use App\Exceptions\BookException;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable
 {
@@ -27,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-	'is_verified' => 'boolean',
+        'is_verified' => 'boolean',
     ];
 
     /**
@@ -57,5 +58,24 @@ class User extends Authenticatable
 
         $borrowLog = BorrowLog::create(['user_id'=>$this->id, 'book_id'=>$book->id]);
         return $borrowLog;
+    }
+    
+    public function sendVerification()
+    {
+        $user = $this;
+        $token = str_random(40);
+        $user->verification_token = $token;
+
+        $user->save();
+        Mail::send('auth.emails.verification', compact('user', 'token'), function ($m) use ($user) {
+            $m->to($user->email, $user->name)->subject('Verifikasi Akun Larapus');
+        });
+    }
+    
+    public function verify()
+    {
+        $this->is_verified = 1;
+        $this->verification_token = null;
+        $this->save();
     }
 }
