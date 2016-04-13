@@ -27,6 +27,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', 'GuestController@index');
     Route::auth();
     Route::get('auth/verify/{token}', 'Auth\AuthController@verify');
+    Route::get('auth/send-verification', 'Auth\AuthController@sendVerification');
     Route::get('/home', 'HomeController@index');
     Route::get('books/{book}/borrow', [
         'middleware'=>['auth', 'role:member'],
