@@ -30,6 +30,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('auth/send-verification', 'Auth\AuthController@sendVerification');
     Route::get('/home', 'HomeController@index');
     Route::get('settings/profile', 'SettingsController@profile');
+    Route::get('settings/profile/edit', 'SettingsController@editProfile');
+    Route::post('settings/profile', 'SettingsController@updateProfile');
 
     Route::get('books/{book}/borrow', [
         'middleware'=>['auth', 'role:member'],
