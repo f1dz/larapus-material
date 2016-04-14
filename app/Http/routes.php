@@ -50,5 +50,8 @@ Route::group(['middleware' => 'web'], function () {
         Route::resource('members', 'MembersController', [
             'only'=>['index', 'show', 'destroy']
         ]);
+        Route::get('statistics', [
+            'as'=>'admin.statistics.index',
+            'uses'=>'StatisticsController@index']);
     });
 });
