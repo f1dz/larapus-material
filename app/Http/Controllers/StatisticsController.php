@@ -15,6 +15,8 @@ class StatisticsController extends Controller
     {
         if ($request->ajax()) {
             $stats = BorrowLog::with('book','user');
+            if ($request->get('status') == 'returned') $stats->returned();
+            if ($request->get('status') == 'not-returned') $stats->borrowed();
 
             return Datatables::of($stats)
                 ->addColumn('returned_at', function($stat){
