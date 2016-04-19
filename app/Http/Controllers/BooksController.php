@@ -16,6 +16,7 @@ use App\BorrowLog;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\BookException;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class BooksController extends Controller
 {
@@ -275,16 +276,26 @@ class BooksController extends Controller
         // validasi
         $this->validate($request, [
             'author_id'=>'required',
+            'type'=>'required|in:pdf,xls'
         ], [
             'author_id.required'=>'Anda belum memilih penulis. Pilih minimal 1 penulis.'
         ]);
 
         $books = Book::whereIn('author_id', $request->get('author_id'))->get();
-
+        $handler = 'export' . ucfirst($request->get('type'));
+        return $this->$handler($books);
+    }
+    
+    /**
+     * Download excel data buku
+     * @return PHPExcel
+     */
+    private function exportXls($books)
+    {
         Excel::create('Data Buku Larapus', function($excel) use ($books) {
-            // Set property
+            // Set the properties
             $excel->setTitle('Data Buku Larapus')
-                ->setCreator(Auth::user()->name);
+                  ->setCreator('Rahmat Awaludin');
 
             $excel->sheet('Data Buku', function($sheet) use ($books) {
                 $row = 1;
@@ -295,7 +306,7 @@ class BooksController extends Controller
                     'Penulis'
                 ]);
                 foreach ($books as $book) {
-                    $sheet->row(++$row, [                        
+                    $sheet->row(++$row, [                    
                         $book->title,
                         $book->amount,
                         $book->stock,
@@ -304,5 +315,15 @@ class BooksController extends Controller
                 }
             });
         })->export('xls');
+    }
+
+    /**
+     * Download pdf data buku
+     * @return Dompdf
+     */
+    private function exportPdf($books)
+    {
+        $pdf = PDF::loadview('pdf.books', compact('books'));
+        return $pdf->download('books.pdf');
     }
 }
