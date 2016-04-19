@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\BorrowLog;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\BookException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BooksController extends Controller
 {
@@ -206,7 +207,7 @@ class BooksController extends Controller
 
         return redirect()->route('admin.books.index');
     }
-    
+
     /**
      * Borrow book
      * @param  int $id book id
@@ -235,7 +236,7 @@ class BooksController extends Controller
 
         return redirect('/');
     }
-    
+
     public function returnBack($book_id)
     {
         $borrowLog = BorrowLog::where('user_id', Auth::user()->id)
@@ -252,7 +253,56 @@ class BooksController extends Controller
                 "message"=>"Berhasil mengembalikan " . $borrowLog->book->title
             ]);
         }
-        
+
         return redirect('/home');
+    }
+
+    /**
+     * Tampilkan halaman untuk export excel
+     * @return response
+     */
+    public function export()
+    {
+        return view('books.export');
+    }
+
+    /**
+     * Download excel data buku
+     * @return PHPExcel
+     */
+    public function exportPost(Request $request)
+    {
+        // validasi
+        $this->validate($request, [
+            'author_id'=>'required',
+        ], [
+            'author_id.required'=>'Anda belum memilih penulis. Pilih minimal 1 penulis.'
+        ]);
+
+        $books = Book::whereIn('author_id', $request->get('author_id'))->get();
+
+        Excel::create('Data Buku Larapus', function($excel) use ($books) {
+            // Set property
+            $excel->setTitle('Data Buku Larapus')
+                ->setCreator(Auth::user()->name);
+
+            $excel->sheet('Data Buku', function($sheet) use ($books) {
+                $row = 1;
+                $sheet->row($row, [                    
+                    'Judul',
+                    'Jumlah',
+                    'Stok',
+                    'Penulis'
+                ]);
+                foreach ($books as $book) {
+                    $sheet->row(++$row, [                        
+                        $book->title,
+                        $book->amount,
+                        $book->stock,
+                        $book->author->name
+                    ]);
+                }
+            });
+        })->export('xls');
     }
 }

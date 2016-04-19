@@ -53,5 +53,11 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('statistics', [
             'as'=>'admin.statistics.index',
             'uses'=>'StatisticsController@index']);
+        Route::get('export/books', [
+            'as'=>'admin.export.books',
+            'uses'=>'BooksController@export']);
+        Route::post('export/books', [
+            'as'=>'admin.export.books.post',
+            'uses'=>'BooksController@exportPost']);
     });
 });
