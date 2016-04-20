@@ -59,5 +59,11 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('export/books', [
             'as'=>'admin.export.books.post',
             'uses'=>'BooksController@exportPost']);
+        Route::get('template/books', [
+            'as'=>'admin.template.books',
+            'uses'=>'BooksController@generateExcelTemplate']);
+        Route::post('import/books', [
+            'as'=>'admin.import.books',
+            'uses'=>'BooksController@importExcel']);
     });
 });
