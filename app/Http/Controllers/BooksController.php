@@ -184,11 +184,14 @@ class BooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $book = Book::find($id);
         $cover = $book->cover;
         if(!$book->delete()) return redirect()->back();
+
+        // handle hapus buku via ajax
+        if ($request->ajax()) return response()->json(['id' => $id]);
 
         // hapus cover lama, jika ada
         if ($cover) {
@@ -429,6 +432,9 @@ class BooksController extends Controller
         ]);
 
         // Tampilkan index buku
-        return redirect()->route('admin.books.index');
+        // return redirect()->route('admin.books.index');
+
+        // Tampilkan halaman review buku
+        return view('books.import-review')->with(compact('books'));
    }
 }
