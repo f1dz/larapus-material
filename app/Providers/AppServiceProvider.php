@@ -13,6 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Load HTML Macro
+        require base_path() . '/app/Helpers/frontend.php';
+
         // Custom Validator: Check value against current password
         // usage: passcheck:currentpassword
         \Validator::extend('passcheck', function ($attribute, $value, $parameters) {
