@@ -21,8 +21,13 @@
                   <td>{{ auth()->user()->name }}</td>
                 </tr>
                 <tr>
+                <tr>
                   <td class="text-muted">Email</td>
                   <td>{{ auth()->user()->email }}</td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Login terakhir</td>
+                  <td>{{ auth()->user()->last_login }}</td>
                 </tr>
               </tbody>
             </table>
