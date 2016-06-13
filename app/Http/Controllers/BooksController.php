@@ -19,6 +19,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Validator;
 use App\Author;
+use Illuminate\Support\Facades\File;
 
 class BooksController extends Controller
 {
